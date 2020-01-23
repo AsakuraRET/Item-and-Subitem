@@ -1,6 +1,7 @@
 require "roda"
 require "sequel"
 
+
 DB = Sequel.connect(adapter: :postgres, database: 'myapp_development', host: 'localhost')
 
 class Myapp < Roda
