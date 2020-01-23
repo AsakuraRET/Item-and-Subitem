@@ -1,8 +1,7 @@
 require "roda"
 require "sequel"
 
-
-DB = Sequel.connect(adapter: :postgres, database: 'myapp_development', host: 'localhost')
+DB = Sequel.connect(adapter: :postgres, database: 'myapp_development', host: 'localhost', user: 'root', password: 'Scrum123')
 
 class Myapp < Roda
   plugin :static, ["/images", "/css", "/js"]
