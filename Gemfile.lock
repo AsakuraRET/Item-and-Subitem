@@ -1,9 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    bcrypt (3.1.13)
     erubis (2.7.0)
     pg (1.2.2)
     rack (2.1.1)
+    rack-protection (2.0.8.1)
+      rack
+    rack_csrf (2.6.0)
+      rack (>= 1.1.0)
     roda (3.28.0)
       rack
     sequel (5.28.0)
@@ -13,8 +18,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt
   erubis
   pg
+  rack-protection
+  rack_csrf
   roda
   sequel
   tilt
