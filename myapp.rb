@@ -20,15 +20,12 @@ class Myapp < Roda
 
   route do |r|
     r.root do
-      view("homepage")
+      view("layout")
     end
-  end
-
-  route do |r|
-    # ...
-
-    r.get "login" do
-      view("login")
+    r.is "login" do
+      r.get do
+        view("login")
+      end
     end
     r.post "login" do
       if user = User.authenticate(r["email"], r["password"])
@@ -45,6 +42,7 @@ class Myapp < Roda
 
     r.on "users" do
       r.get "new" do
+        response
         @user = User.new
         view("users/new")
       end
@@ -71,5 +69,4 @@ class Myapp < Roda
       end
     end
   end
-end
 end
