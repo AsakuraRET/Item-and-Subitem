@@ -9,6 +9,7 @@ class Myapp < Roda
   plugin :static, ["/images", "/css", "/js"]
   plugin :render
   plugin :head
+  plugin :multi_route
 
   Sequel::Model.plugin :validation_helpers
 
@@ -17,56 +18,70 @@ class Myapp < Roda
   plugin :csrf
 
   require './models/user.rb'
+  require './models/subitem.rb'
+  require './models/item.rb'
 
   route do |r|
-    r.root do
-      view("layout")
-    end
-    r.is "login" do
-      r.get do
-        view("login")
+    r.on 'models' do
+      r.on 'item' do
+        r.route 'item'
       end
-    end
-    r.post "login" do
-      if user = User.authenticate(r["email"], r["password"])
-        session[:user_id] = user.id
-        r.redirect "/"
-      else
-        r.redirect "/login"
-      end
-    end
-    r.post "logout" do
-      session.clear
-      r.redirect "/"
-    end
-
-    r.on "users" do
-      r.get "new" do
-        response
-        @user = User.new
-        view("users/new")
-      end
-
-      r.get ":id" do |id|
-        @user = User[id]
-        view("users/show")
-      end
-
-      r.is do
-        r.get do
-          @users = User.order(:id)
-          view("users/index")
-        end
-
-        r.post do
-          @user = User.new(r["user"])
-          if @user.valid? && @user.save
-            r.redirect "/users"
-          else
-            view("users/new")
-          end
-        end
+      r.on 'subitem' do
+        r.route 'subitem'
       end
     end
   end
+  #  r.root do
+  #    view("homepage")
+  #  end
+  #  r.is "contact" do
+  #    view 'contact'
+  #  end
+  #  r.is "login" do
+  #    r.get do
+  #      view("login")
+  #    end
+  #  end
+  #  r.post "login" do
+  #    if user = User.authenticate(r["email"], r["password"])
+  #      session[:user_id] = user.id
+  #      r.redirect "/"
+  #    else
+  #      r.redirect "/login"
+  #    end
+  #  end
+  #  r.post "logout" do
+  #    session.clear
+  #    r.redirect "/"
+  #  end
+  #
+  #  r.on "users" do
+  #    r.get "new" do
+  #      response
+  #      @user = User.new
+  #      view("users/new")
+  #    end
+  #
+  #    r.get ":id" do |id|
+  #      @user = User[id]
+  #      view("users/show")
+  #    end
+  #
+  #    r.is do
+  #      r.get do
+  #        @users = User.order(:id)
+  #        view("users/index")
+  #      end
+  #
+  #      r.post do
+  #        @user = User.new(r["user"])
+  #        if @user.valid? && @user.save
+  #          r.redirect "/users"
+  #        else
+  #          view("users/new")
+  #        end
+  #      end
+  #    end
+  #  end
+  #end
 end
