@@ -4,7 +4,7 @@ GEM
     bcrypt (3.1.13)
     erubis (2.7.0)
     pg (1.2.2)
-    rack (2.1.1)
+    rack (3.0.4.1)
     rack-protection (2.0.8.1)
       rack
     rack_csrf (2.6.0)
